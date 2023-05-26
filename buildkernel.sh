@@ -121,7 +121,10 @@ archive_kernel_modules()
 	echo ${FINAL_RAMDISK_KERNEL_MODULES}
 
 	if [ ! -z "${FINAL_RAMDISK_KERNEL_MODULES}" ]; then
-		zip -rq ${VENDOR_RAMDISK_KERNEL_MODULES_ARCHIVE} ${FINAL_RAMDISK_KERNEL_MODULES}
+		#MSCHANGE - generate vendor_boot_modules.load from ${VENDOR_RAMDISK_KERNEL_MODULES} and save to ${VENDOR_RAMDISK_KERNEL_MODULES_ARCHIVE}
+		echo ${VENDOR_RAMDISK_KERNEL_MODULES} | tr " " "\n" > vendor_boot_modules.load
+		zip -rq ${VENDOR_RAMDISK_KERNEL_MODULES_ARCHIVE} vendor_boot_modules.load ${FINAL_RAMDISK_KERNEL_MODULES}
+		#MSCHANGE end
 	fi
 
 	# Filter-out the modules in vendor-ramdisk and zip the vendor kernel modules
